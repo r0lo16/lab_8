@@ -1,8 +1,9 @@
 #include <stdio.h> 
 #include <pthread.h> 
-#include <semaphore.h> 
+#include <semaphore.h>
+ #include <unistd.h>
 #include <time.h>
-#include <unistd.h>
+
 
 #define N 5 
 #define THINKING 2 
@@ -22,7 +23,7 @@ void test(int phnum)
     if (state[phnum] == HUNGRY 
         && state[LEFT] != EATING 
         && state[RIGHT] != EATING) { 
-        // state that eating 
+        // jedzenie
         state[phnum] = EATING; 
   
         sleep(2); 
