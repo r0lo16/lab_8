@@ -58,4 +58,21 @@ void take_fork(int phnum)
     sem_wait(&S[phnum]); 
   
     sleep(1); 
+} // odlozono jedzenie
+void put_fork(int phnum) 
+{ 
+  
+    sem_wait(&mutex); 
+  
+    // zaczynaja myslec
+    state[phnum] = THINKING; 
+  
+    printf("Philosopher %d putting fork %d and %d down\n", 
+           phnum + 1, LEFT + 1, phnum + 1); 
+    printf("Philosopher %d is thinking\n", phnum + 1); 
+  
+    test(LEFT); 
+    test(RIGHT); 
+  
+    sem_post(&mutex); 
 } 
