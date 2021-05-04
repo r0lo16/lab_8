@@ -38,4 +38,24 @@ void test(int phnum)
         // podczas wykonywania putfork 
         sem_post(&S[phnum]); 
     } 
+}
+void take_fork(int phnum) 
+{ 
+  
+    sem_wait(&mutex); 
+  
+    // stwierdzenie głodu
+    state[phnum] = HUNGRY; 
+  
+    printf("Philosopher %d is Hungry\n", phnum + 1); 
+  
+    // jedzenie jesli sasiad nie je
+    test(phnum); 
+  
+    sem_post(&mutex); 
+  
+    // oczekiwanie na sygnał aby zjesc
+    sem_wait(&S[phnum]); 
+  
+    sleep(1); 
 } 
