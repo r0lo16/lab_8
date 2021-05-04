@@ -12,19 +12,19 @@
 #define LEFT (phnum + 4) % N 
 #define RIGHT (phnum + 1) % N 
   
-int state[N]; 
-int phil[N] = { 0, 1, 2, 3, 4 }; 
+int obecny_stan[N]; 
+int filozof[N] = { 0, 1, 2, 3, 4 }; 
   
 sem_t mutex; 
 sem_t S[N]; 
 
 void test(int phnum) 
 { 
-    if (state[phnum] == HUNGRY 
-        && state[LEFT] != EATING 
-        && state[RIGHT] != EATING) { 
+    if (obecny_stan[phnum] == HUNGRY 
+        && obecny_stan[LEFT] != EATING 
+        && obecny_stan[RIGHT] != EATING) { 
         // jedzenie
-        state[phnum] = EATING; 
+        obecny_stan[phnum] = EATING; 
   
         sleep(2); 
   
@@ -46,9 +46,9 @@ void take_fork(int phnum)
     sem_wait(&mutex); 
   
     // stwierdzenie głodu
-    state[phnum] = HUNGRY; 
+    obecny_stan[phnum] = HUNGRY; 
   
-    printf("Philosopher %d is Hungry\n", phnum + 1); 
+    printf("Filozof %d jest glodny\n", phnum + 1); 
   
     // jedzenie jesli sasiad nie je
     test(phnum); 
@@ -66,11 +66,11 @@ void put_fork(int phnum)
     sem_wait(&mutex); 
   
     // zaczynaja myslec
-    state[phnum] = THINKING; 
+    obecny_stan[phnum] = THINKING; 
   
-    printf("Philosopher %d putting fork %d and %d down\n", 
+    printf("Filozof %d uruchamia fork %d i %d down\n", 
            phnum + 1, LEFT + 1, phnum + 1); 
-    printf("Philosopher %d is thinking\n", phnum + 1); 
+    printf("Filozof %d  mysli\n", phnum + 1); 
   
     test(LEFT); 
     test(RIGHT); 
@@ -110,9 +110,9 @@ int main()
   
         // tworzy process filozofow
         pthread_create(&thread_id[i], NULL, 
-                       philospher, &phil[i]); 
+                       philospher, &filozof[i]); 
   
-        printf("Philosopher %d is thinking\n", i + 1); 
+        printf("Filozof %d  myśli\n", i + 1); 
     } 
   
     for (i = 0; i < N; i++) 
