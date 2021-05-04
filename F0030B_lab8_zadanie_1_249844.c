@@ -28,10 +28,10 @@ void test(int phnum)
   
         sleep(2); 
   
-        printf("Philosopher %d takes fork %d and %d\n", 
+        printf("Filozof %d uruchamia fork %d i %d\n", 
                       phnum + 1, LEFT + 1, phnum + 1); 
   
-        printf("Philosopher %d is Eating\n", phnum + 1); 
+        printf("Filozof %d is je\n", phnum + 1); 
   
         // sem_post(&S[phnum]) brak efektu
         // podczas pracy
